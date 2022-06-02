@@ -19,7 +19,7 @@
 ### 管理系统模块
 
 + 主界面
-  + 类名：MainPage.java
+  + 类名：MainPage.java，开始时间2022/6/2
 + 商品维护界面
 + 添加商品
 + 更改商品
@@ -39,4 +39,18 @@
 
 
 ### 说明
-1、utils.InputUtils.java类是用来过滤输入的，里面的都是静态方法，可以直接调用
+
+#### utils包
+
+1、InputUtils.java类是用来过滤输入的，里面的都是静态方法，可以直接调用
+2、DBUtils.java类是数据库的基本操作，比如获取数据库连接，关闭资源
+
+#### dao包(DAO(Data Access Object,数据访问对象的缩写))
+
+1、GoodsDAO.java类里面实现了对GOODS表的操作
+2、GsalesDAO.java类里面实现了对GSALES表的操作
+3、SalesmanDAO.java类里面实现了对SALESMAN表的操作，如1.插入用户，2.查询用户
+
+#### pojo包(POJO(Plain Ordinary Java Object)简单的Java对象)
+
+这个就不解释了，里面的包都是映射数据库表，每个类的属性都一一对应着数据表的字段

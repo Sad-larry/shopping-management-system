@@ -1,7 +1,7 @@
 package work.moonzs.dao;
 
 import work.moonzs.pojo.Salesman;
-import work.moonzs.utils.SqlUtils;
+import work.moonzs.utils.DBUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,18 +19,22 @@ public class SalesmanDAO {
      *
      * @param salesman xxx
      */
-    public void insertData(Salesman salesman) {
+    public void insertSalesman(Salesman salesman) {
         try {
-            Connection conn = SqlUtils.getConnection();
+            Connection conn = DBUtils.getConnection();
             String sql = "INSERT INTO salesman values(?,?,?)";
             PreparedStatement psmt = conn.prepareStatement(sql);
             psmt.setInt(1, salesman.getSid());
             psmt.setString(2, salesman.getSname());
             psmt.setString(3, salesman.getSpassword());
             psmt.executeUpdate();
-            SqlUtils.closeResource(conn, psmt);
+            DBUtils.closeResource(conn, psmt);
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void querySalesman(Salesman salesman) {
+        String sql = "SELECT * FROM salesman";
     }
 }

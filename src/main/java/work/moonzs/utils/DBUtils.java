@@ -10,7 +10,7 @@ import java.util.Properties;
  * <p>
  * 用于对数据库的操作工具类
  */
-public class SqlUtils {
+public class DBUtils {
     /**
      * 获取数据库连接
      *
