@@ -34,7 +34,57 @@ public class SalesmanDAO {
         }
     }
 
+    /**
+     * 查询用户，传入的是一个销售员对象
+     *
+     * @param salesman xxx
+     */
     public void querySalesman(Salesman salesman) {
         String sql = "SELECT * FROM salesman";
+        try{
+            Connection conn = DBUtils.getConnection();
+            PreparedStatement psmt = conn.prepareStatement(sql);
+            psmt.execute();
+            DBUtils.closeResource(conn, psmt);
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除用户，传入的是一个销售员对象
+     *
+     * @param salesman xxx
+     */
+    public void deleteSalesman(Salesman salesman){
+        try{
+            Connection conn = DBUtils.getConnection();
+            String sql = "delete from salesman where sid=?";
+            PreparedStatement psmt = conn.prepareStatement(sql);
+            psmt.setInt(1, salesman.getSid());
+            psmt.executeUpdate();
+            DBUtils.closeResource(conn, psmt);
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改密码，传入的是一个销售员对象
+     *
+     * @param salesman xxx
+     */
+    public void updateSalesman(Salesman salesman){
+        try{
+            Connection conn = DBUtils.getConnection();
+            String sql = "update salesman set spassword=? where sid=?";
+            PreparedStatement psmt = conn.prepareStatement(sql);
+            psmt.setString(1, salesman.getSpassword());
+            psmt.setInt(2, salesman.getSid());
+            psmt.executeUpdate();
+            DBUtils.closeResource(conn, psmt);
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
