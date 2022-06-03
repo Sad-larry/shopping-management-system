@@ -1,10 +1,14 @@
 package work.moonzs;
 
+import work.moonzs.dao.GoodsDAO;
 import work.moonzs.dao.SalesmanDAO;
+import work.moonzs.pojo.Goods;
 import work.moonzs.pojo.Salesman;
 import work.moonzs.utils.InputUtils;
 
 import java.util.List;
+import java.sql.SQLOutput;
+import java.util.Scanner;
 
 /**
  * @author Moondust月尘
@@ -123,24 +127,25 @@ public class MainPage {
                 case '0':
                     System.out.println("上一级...");
                     isRun = false;
+                    break;
                 case '1':
-                    System.out.println("添加商品...");
+                    System.out.println("执行添加商品操作：");
                     insertGoods();
                     break;
                 case '2':
-                    System.out.println("更改商品...");
+                    System.out.println("执行更改商品操作：");
                     updateGoods();
                     break;
                 case '3':
-                    System.out.println("删除商品...");
+                    System.out.println("执行删除商品操作：");
                     deleteGoods();
                     break;
                 case '4':
-                    System.out.println("显示所有商品...");
+                    System.out.println("执行显示所有商品操作：");
                     listGoods();
                     break;
                 case '5':
-                    System.out.println("查询商品...");
+                    System.out.println("执行查询商品操作：");
                     queryGoods();
                     break;
                 default:
@@ -185,23 +190,152 @@ public class MainPage {
     }
 
     public static void insertGoods() {
-        System.out.println("添加商品");
+        GoodsDAO goodsDAO = new GoodsDAO();
+        System.out.print("添加商品的名称：");
+        String gname = InputUtils.readString();
+        System.out.print("添加商品的价格：");
+        Double gprice = InputUtils.readDouble();
+        System.out.print("添加商品的数量：");
+        Integer gnum = InputUtils.readNumber();
+        System.out.print("是否确定添加该商品(y/n)：");
+        char c = InputUtils.readConfirmSelection();
+        if(c == 'y') {
+            goodsDAO.insertGoods(new Goods(gname, gprice, gnum));
+            System.out.println("添加商品成功");
+        }
+        System.out.println("是否继续添加商品(y/n)：");
+        c = InputUtils.readConfirmSelection();
+        if(c == 'y'){
+            insertGoods();
+        }
     }
 
     public static void updateGoods() {
-        System.out.println("修改商品");
+        System.out.print("请输入更改商品名称：");
+        String gname = InputUtils.readString();
+        GoodsDAO goodsDAO = new GoodsDAO();
+        Goods goods = goodsDAO.selectByName(gname);
+        if(goods != null){
+            System.out.printf("%-10s%-10s%-10s\n", "商品名称", "商品价格", "商品数量");
+            System.out.printf("%-10s%-10s%-10s\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+            System.out.println("选择您要更改的内容：");
+            System.out.println("\t1、更改商品名称：");
+            System.out.println("\t2、更改商品价格：");
+            System.out.println("\t3、更改商品数量：");
+            char c = InputUtils.readMenuSelectionForGoodsAndSaleMan();
+            if(c == '1'){
+                System.out.print("请输入要更改商品名称：");
+                String newName = InputUtils.readString();
+                System.out.print("是否确定更改(y/n)");
+                char isUpdate = InputUtils.readConfirmSelection();
+                if(isUpdate == 'y'){
+                    goodsDAO.updateGoodsName(gname,newName);
+                    System.out.println("更改成功");
+                }
+            } else if(c == '2'){
+                System.out.print("请输入要更改商品价格：");
+                double newPrice = InputUtils.readDouble();
+                System.out.print("是否确定更改(y/n)");
+                char isUpdate = InputUtils.readConfirmSelection();
+                if(isUpdate == 'y'){
+                    goodsDAO.updateGoodsPrice(gname,newPrice);
+                    System.out.println("更改成功");
+                }
+
+            } else if(c == '3'){
+                System.out.print("请输入要更改商品数量：");
+                Integer newNum = InputUtils.readNumber();
+                System.out.print("是否确定更改(y/n)");
+                char isUpdate = InputUtils.readConfirmSelection();
+                if(isUpdate == 'y'){
+                    goodsDAO.updateGoodsNum(gname,newNum);
+                    System.out.println("更改成功");
+                }
+            }
+            } else {
+                System.out.println("未查询到数据");
+            }
+            System.out.println("是否继续更改商品(y/n)：");
+            char c3 = InputUtils.readConfirmSelection();
+            if(c3 == 'y'){
+                updateGoods();
+        }
     }
 
     public static void deleteGoods() {
-        System.out.println("删除商品");
+        System.out.print("输入删除的商品名称：");
+        String gname = InputUtils.readString();
+        GoodsDAO goodsDAO = new GoodsDAO();
+        Goods goods = goodsDAO.selectByName(gname);
+        if(goods != null) {
+            System.out.printf("%-10s%-10s%-10s\n", "商品名称", "商品价格", "商品数量");
+            System.out.printf("%-10s%-10s%-10s\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+            System.out.println("是否确定要删除(y/n)?：");
+            char c = InputUtils.readConfirmSelection();
+            if(c == 'y'){
+                goodsDAO.deleteGoods(gname);
+                System.out.println("删除成功");
+            }
+        } else {
+            System.out.println("为查询到数据");
+        }
+        System.out.println("是否继续(y/n)?：");
+        char c3 = InputUtils.readConfirmSelection();
+        if(c3 == 'y'){
+            deleteGoods();
+        }
     }
 
     public static void listGoods() {
-        System.out.println("列出所有傻瓜");
+        System.out.println("显示所有商品");
+        GoodsDAO goodsDAO = new GoodsDAO();
+        List<Goods> list = goodsDAO.selectAllGoods();
+        if (list != null) {
+            System.out.printf("%-10s %-10s %-10s\n", "商品名称", "商品价格", "商品数量");
+            for (Goods goods : list) {
+                System.out.printf("%-10s %-10.2f %-10d\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+            }
+        }
     }
 
     public static void queryGoods() {
-        System.out.println("查询商品");
+        GoodsDAO goodsDAO = new GoodsDAO();
+        System.out.println("\t1、按商品数量升序查询");
+        System.out.println("\t2、按商品价格升序查询");
+        System.out.println("\t3、输入关键字查询商品");
+        char c = InputUtils.readMenuSelectionForMain();
+        if(c == '1'){
+            List<Goods> list = goodsDAO.selectAllGoodsByNum();
+            if(list != null){
+                System.out.printf("%-10s%-10s%-10s\n", "商品名称", "商品价格", "商品数量");
+                for (Goods goods : list) {
+                    System.out.printf("%-10s%-10.2f%-10d\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+                }
+            }
+        } else if(c == '2'){
+            List<Goods> list = goodsDAO.selectAllGoodsByPrice();
+            if(list != null){
+                System.out.printf("%-10s%-10s%-10s\n", "商品名称", "商品价格", "商品数量");
+                for (Goods goods : list) {
+                    System.out.printf("%-10s%-10.2f%-10d\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+                }
+            }
+        } else if(c == '3'){
+            System.out.print("输入要查询的商品名称关键字：");
+            String gname = InputUtils.readString();
+            List<Goods> list = goodsDAO.selectByKeyWord(gname);
+            if(list != null){
+                System.out.printf("%-10s%-10s%-10s\n", "商品名称", "商品价格", "商品数量");
+                for (Goods goods : list) {
+                    System.out.printf("%-10s%-10.2f%-10d\n", goods.getGname(), goods.getGprice(), goods.getGnum());
+                }
+            }
+        }
+        System.out.print("是否继续（y/n）：");
+        char c3 = InputUtils.readConfirmSelection();
+        if (c3 == 'y') {
+            queryGoods();
+        }
     }
 
     public static void listGoodsForSaledToday() {
