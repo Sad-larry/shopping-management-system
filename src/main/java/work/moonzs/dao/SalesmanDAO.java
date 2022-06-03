@@ -45,7 +45,7 @@ public class SalesmanDAO {
         boolean isLogin = false;
         try {
             conn = DBUtils.getConnection();
-            String sql = "SELECT * FROM salesman WHERE username=? AND password=?";
+            String sql = "SELECT * FROM salesman WHERE sname=? AND spassword=?";
             psmt = conn.prepareStatement(sql);
             psmt.setString(1, salesman.getSname());
             psmt.setString(2, salesman.getSpassword());
