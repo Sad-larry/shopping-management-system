@@ -18,6 +18,14 @@ public class Salesman {
      */
     private String spassword;
 
+    public Salesman() {
+    }
+
+    public Salesman(String sname, String spassword) {
+        this.sname = sname;
+        this.spassword = spassword;
+    }
+
     public Integer getSid() {
         return sid;
     }
