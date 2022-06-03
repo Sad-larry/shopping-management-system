@@ -137,11 +137,11 @@ public class InputUtils {
     public static char readConfirmSelection() {
         char c;
         while (true) {
-            c = readKeyBoard(1).toUpperCase().charAt(0);
-            if (c != 'Y' && c != 'N') {
-                break;
-            } else {
+            c = readKeyBoard(1).toLowerCase().charAt(0);
+            if (c != 'y' && c != 'n') {
                 System.out.print("选择错误，请重新输入：");
+            } else {
+                break;
             }
         }
         return c;

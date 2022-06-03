@@ -4,7 +4,7 @@ import work.moonzs.dao.SalesmanDAO;
 import work.moonzs.pojo.Salesman;
 import work.moonzs.utils.InputUtils;
 
-import java.util.Scanner;
+import java.util.List;
 
 /**
  * @author Moondust月尘
@@ -31,7 +31,6 @@ public class MainPage {
             char input = InputUtils.readMenuSelectionForSystem();
             switch (input) {
                 case '1':
-                    System.out.println("登录...");
                     if (loginPage()) {
                         mainPage();
                     }
@@ -88,7 +87,7 @@ public class MainPage {
                     isRun = false;
                     break;
                 case '1':
-                    System.out.println("商品维护...");
+                    System.out.println("执行显示商品维护菜单");
                     goodsMain();
                     break;
                 case '2':
@@ -96,7 +95,7 @@ public class MainPage {
                     saleShopping();
                     break;
                 case '3':
-                    System.out.println("商品管理...");
+                    System.out.println("执行商品管理");
                     goodsManager();
                     break;
                 default:
@@ -110,6 +109,7 @@ public class MainPage {
     public static void goodsMain() {
         boolean isRun = true;
         while (isRun) {
+            System.out.println("商超购物管理系统>>商品维护");
             System.out.println("*******************************");
             System.out.println("\t1、添加商品");
             System.out.println("\t2、更改商品");
@@ -158,6 +158,7 @@ public class MainPage {
     public static void goodsManager() {
         boolean isRun = true;
         while (isRun) {
+            System.out.println("商超购物管理系统>>商品管理");
             System.out.println("*******************************");
             System.out.println("\t1、列出当日卖出商品列表");
             System.out.println("\t2、售货员管理");
@@ -210,6 +211,7 @@ public class MainPage {
     public static void salesmanManager() {
         boolean isRun = true;
         while (isRun) {
+            System.out.println("商超购物管理系统>>商品管理>>售货员管理.");
             System.out.println("*******************************");
             System.out.println("\t1、添加售货员");
             System.out.println("\t2、更改售货员");
@@ -223,24 +225,25 @@ public class MainPage {
                 case '0':
                     System.out.println("上一级...");
                     isRun = false;
+                    break;
                 case '1':
-                    System.out.println("添加售货员...");
+                    System.out.println("执行添加售货员操作:");
                     insertSalesman();
                     break;
                 case '2':
-                    System.out.println("更改售货员...");
+                    System.out.println("执行更改售货员操作:");
                     updateSalesman();
                     break;
                 case '3':
-                    System.out.println("删除售货员...");
+                    System.out.println("执行删除售货员操作");
                     deleteSalesman();
                     break;
                 case '4':
-                    System.out.println("显示所有售货员...");
+                    System.out.println("执行显示所有售货员操作");
                     listSalesman();
                     break;
                 case '5':
-                    System.out.println("查询售货员...");
+                    System.out.println("执行查询售货员操作");
                     querySalesman();
                     break;
                 default:
@@ -251,22 +254,114 @@ public class MainPage {
     }
 
     public static void insertSalesman() {
-        System.out.println("添加售货员");
+        System.out.print("添加售货员姓名：");
+        String sname = InputUtils.readString();
+        System.out.print("添加售货员密码：");
+        String spassword = InputUtils.readString();
+        System.out.print("是否继续（y/n）：");
+        char c = InputUtils.readConfirmSelection();
+        if (c == 'y') {
+            new SalesmanDAO().insertSalesman(new Salesman(sname, spassword));
+            System.out.println("添加成功");
+        }
+        System.out.print("是否继续添加（y/n）：");
+        c = InputUtils.readConfirmSelection();
+        if (c == 'y') {
+            insertSalesman();
+        }
     }
 
     public static void updateSalesman() {
-        System.out.println("更改售货员");
+        System.out.print("输入更改的售货员姓名：");
+        String sname = InputUtils.readString();
+        SalesmanDAO salesmanDAO = new SalesmanDAO();
+        Salesman salesman = salesmanDAO.selectByName(sname);
+        if (salesman != null) {
+            System.out.printf("%-10s%-10s\n", "售货员姓名", "售货员密码");
+            System.out.printf("%-10s%-10s\n", salesman.getSname(), salesman.getSpassword());
+            System.out.println("选择您要更改的内容：");
+            System.out.println("\t1、更改售货员姓名");
+            System.out.println("\t2、更改售货员密码");
+            char c = InputUtils.readMenuSelectionForSystem();
+            if (c == '1') {
+                System.out.print("请输入已更改售货员姓名：");
+                String newName = InputUtils.readString();
+                System.out.print("是否继续（y/n）：");
+                char c2 = InputUtils.readConfirmSelection();
+                if (c2 == 'y') {
+                    salesmanDAO.updateSalesmanName(sname, newName);
+                    System.out.println("更新成功");
+                }
+            } else if (c == '2') {
+                System.out.print("请输入已更改售货员密码：");
+                String newPassword = InputUtils.readString();
+                System.out.print("是否继续（y/n）：");
+                char c2 = InputUtils.readConfirmSelection();
+                if (c2 == 'y') {
+                    salesmanDAO.updateSalesmanPassword(sname, newPassword);
+                    System.out.println("更新成功");
+                }
+            }
+        } else {
+            System.out.println("未查询到数据");
+        }
+        System.out.print("是否继续更新（y/n）：");
+        char c = InputUtils.readConfirmSelection();
+        if (c == 'y') {
+            updateSalesman();
+        }
     }
 
     public static void deleteSalesman() {
-        System.out.println("删除售货员");
+        System.out.print("输入删除的售货员姓名：");
+        String sname = InputUtils.readString();
+        SalesmanDAO salesmanDAO = new SalesmanDAO();
+        Salesman salesman = salesmanDAO.selectByName(sname);
+        if (salesman != null) {
+            System.out.printf("%-10s%-10s\n", "售货员姓名", "售货员密码");
+            System.out.printf("%-10s%-10s\n", salesman.getSname(), salesman.getSpassword());
+            System.out.print("是否确定删除（y/n）：");
+            char c = InputUtils.readConfirmSelection();
+            if (c == 'y') {
+                new SalesmanDAO().deleteSalesman(sname);
+                System.out.println("删除成功");
+            }
+        } else {
+            System.out.println("未查询到数据");
+        }
+        System.out.print("是否继续（y/n）：");
+        char c = InputUtils.readConfirmSelection();
+        if (c == 'y') {
+            deleteSalesman();
+        }
     }
 
     public static void listSalesman() {
-        System.out.println("显示所有售货员");
+        SalesmanDAO salesmanDAO = new SalesmanDAO();
+        List<Salesman> list = salesmanDAO.selectAllSalesman();
+        if (list != null) {
+            System.out.printf("%-10s%-10s\n", "售货员姓名", "售货员密码");
+            for (Salesman salesman : list) {
+                System.out.printf("%-10s%-10s\n", salesman.getSname(), salesman.getSpassword());
+            }
+        }
     }
 
     public static void querySalesman() {
-        System.out.println("查询售货员");
+        System.out.print("输入要查询的售货员姓名关键字：");
+        String sname = InputUtils.readString();
+        SalesmanDAO salesmanDAO = new SalesmanDAO();
+        List<Salesman> list = salesmanDAO.selectByKeyWord(sname);
+        if (list != null) {
+            System.out.printf("%-10s%-10s\n", "售货员姓名", "售货员密码");
+            for (Salesman salesman : list) {
+                System.out.printf("%-10s%-10s\n", salesman.getSname(), salesman.getSpassword());
+            }
+        }
+        System.out.print("是否继续（y/n）：");
+        char c = InputUtils.readConfirmSelection();
+        if (c == 'y') {
+            querySalesman();
+        }
     }
 }
