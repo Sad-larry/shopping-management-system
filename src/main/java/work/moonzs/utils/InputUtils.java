@@ -39,7 +39,25 @@ public class InputUtils {
         char c;
         while (true) {
             c = readKeyBoard(1).charAt(0);
-            if (c != '1' && c != '2') {
+            if (c != '0' && c != '1' && c != '2') {
+                System.out.print("选择错误，请重新输入：");
+            } else {
+                break;
+            }
+        }
+        return c;
+    }
+
+    /**
+     * 用于主页面时的选择
+     *
+     * @return xxx
+     */
+    public static char readMenuSelectionForMain() {
+        char c;
+        while (true) {
+            c = readKeyBoard(1).charAt(0);
+            if (c != '0' && c != '1' && c != '2' && c != '3') {
                 System.out.print("选择错误，请重新输入：");
             } else {
                 break;
@@ -57,7 +75,7 @@ public class InputUtils {
         char c;
         while (true) {
             c = readKeyBoard(1).charAt(0);
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5') {
+            if (c != '0' && c != '1' && c != '2' && c != '3' && c != '4' && c != '5') {
                 System.out.print("选择错误，请重新输入：");
             } else {
                 break;
@@ -68,6 +86,7 @@ public class InputUtils {
 
     /**
      * 读取长度不超过6位数的整数
+     *
      * @return xxx
      */
     public static int readNumber() {
@@ -85,6 +104,7 @@ public class InputUtils {
 
     /**
      * 用于浮点数的输入，长度不超过10
+     *
      * @return xxx
      */
     public static double readDouble() {
@@ -102,6 +122,7 @@ public class InputUtils {
 
     /**
      * 用于读取长度不超过10的字符串
+     *
      * @return xxx
      */
     public static String readString() {
@@ -110,11 +131,12 @@ public class InputUtils {
 
     /**
      * 用于确认选择的输入。该方法从键盘读取‘Y’或’N’，并将其作为方法的返回值。
+     *
      * @return xxx
      */
     public static char readConfirmSelection() {
         char c;
-        while (true){
+        while (true) {
             c = readKeyBoard(1).toUpperCase().charAt(0);
             if (c != 'Y' && c != 'N') {
                 break;
