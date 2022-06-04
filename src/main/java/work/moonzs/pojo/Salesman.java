@@ -26,6 +26,12 @@ public class Salesman {
         this.spassword = spassword;
     }
 
+    public Salesman(Integer sid, String sname, String spassword) {
+        this.sid = sid;
+        this.sname = sname;
+        this.spassword = spassword;
+    }
+
     public Integer getSid() {
         return sid;
     }

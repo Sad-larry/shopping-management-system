@@ -27,6 +27,13 @@ public class Goods {
         this.gnum = gnum;
     }
 
+    public Goods(Integer gid, String gname, Double gprice, Integer gnum) {
+        this.gid = gid;
+        this.gname = gname;
+        this.gprice = gprice;
+        this.gnum = gnum;
+    }
+
     public Integer getGid() {
         return gid;
     }

@@ -246,7 +246,7 @@ public class GoodsDAO {
             psmt.setString(1, gname);
             rs = psmt.executeQuery();
             if (rs.next()) {
-                goods = new Goods(rs.getString(2), rs.getDouble(3), rs.getInt(4));
+                goods = new Goods(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();

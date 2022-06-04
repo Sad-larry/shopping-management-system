@@ -169,7 +169,7 @@ public class SalesmanDAO {
             psmt.setString(1, sname);
             rs = psmt.executeQuery();
             if (rs.next()) {
-                salesman = new Salesman(rs.getString(2), rs.getString(3));
+                salesman = new Salesman(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();

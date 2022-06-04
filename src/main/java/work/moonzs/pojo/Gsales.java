@@ -1,6 +1,7 @@
 package work.moonzs.pojo;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 /**
  * @author Moondust月尘
@@ -26,6 +27,13 @@ public class Gsales {
      * 销售的商品数量
      */
     private Integer snum;
+
+    public Gsales(Integer gid, Integer sid, Date sdate, Integer snum) {
+        this.gid = gid;
+        this.sid = sid;
+        this.sdate = sdate;
+        this.snum = snum;
+    }
 
     public Integer getGsid() {
         return gsid;
