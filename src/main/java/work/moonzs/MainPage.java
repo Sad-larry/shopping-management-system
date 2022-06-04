@@ -398,17 +398,10 @@ public class MainPage {
         System.out.println("今日售出商品：");
         GsalesDAO gsalesDAO = new GsalesDAO();
         List<List<String>> list = gsalesDAO.selectTodaySales();
-        List<Goods> listg= null;
-        List<Salesman> lists = null;
         if(list != null) {
             System.out.printf("%-10s %-10s %-10s %-10s %-10s\n", "商品名称", "商品价格", "商品数量", "销量", "备注");
             for(List<String> l : list){
-                System.out.printf("%-10s %-10s %-10s %-10s %-10s", l.get(0), l.get(1), l.get(2), l.get(3));
-                if((Integer.parseInt(l.get(2)) - Integer.parseInt(l.get(3))) < 10){
-                    System.out.printf("%-10s\n", "*该商品已不足10件");
-                } else{
-                    System.out.println();
-                }
+                System.out.printf("%-10s %-10s %-10s %-10s %-10s\n", l.get(0), l.get(1), l.get(2), l.get(3), l.get(4));
             }
         }
     }

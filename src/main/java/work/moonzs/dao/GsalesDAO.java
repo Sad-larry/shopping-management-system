@@ -35,30 +35,33 @@ public class GsalesDAO {
         }
     }
 
-    public List<List<String>> selectTodaySales(){
+
+    public List<List<String>> selectTodaySales() {
         Connection conn = null;
         PreparedStatement psmt = null;
         ResultSet rs = null;
         List<List<String>> list = new ArrayList<>();
-        List<String> l = null;
-        List<Goods> listg = null;
-        List<Gsales> lists = null;
         try {
             conn = DBUtils.getConnection();
-            String sql = "SELECT goods.gname,goods.gprice,goods.gnum,gsales.snum \n" +
-                    "FROM gsales JOIN goods ON gsales.`gid`=goods.`gid`\n" +
-                    "WHERE sdate=?";
+            String sql = """
+                    SELECT goods.gname,goods.gprice,goods.gnum,gsales.snum
+                    FROM gsales JOIN goods ON gsales.`gid`=goods.`gid`
+                    WHERE sdate=?""";
             psmt = conn.prepareStatement(sql);
             psmt.setDate(1, new Date(System.currentTimeMillis()));
             rs = psmt.executeQuery();
-            l = new ArrayList<>();
+            List<String> l = null;
             while (rs.next()) {
-                listg = new ArrayList<>();
-                lists = new ArrayList<>();
-                l.add(rs.getString(1), rs.getDouble(2), rs.getInt(3));
-                l.add(new Gsales(rs.getInt(4)));
-                l.add(listg.toString());
-                l.add(lists.toString());
+                l = new ArrayList<>();
+                l.add(rs.getString(1));
+                l.add(String.valueOf(rs.getDouble(2)));
+                l.add(String.valueOf(rs.getInt(3)));
+                l.add(String.valueOf(rs.getInt(4)));
+                if (rs.getInt(3) < 10) {
+                    l.add("*该商品已不足10件");
+                } else {
+                    l.add("");
+                }
                 list.add(l);
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
