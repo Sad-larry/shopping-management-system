@@ -35,6 +35,11 @@ public class Gsales {
         this.snum = snum;
     }
 
+    public Gsales(int snum) {
+        this.snum = snum;
+    }
+
+
     public Integer getGsid() {
         return gsid;
     }
