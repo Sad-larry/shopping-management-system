@@ -43,10 +43,8 @@ public class GsalesDAO {
         List<List<String>> list = new ArrayList<>();
         try {
             conn = DBUtils.getConnection();
-            String sql = """
-                    SELECT goods.gname,goods.gprice,goods.gnum,gsales.snum
-                    FROM gsales JOIN goods ON gsales.`gid`=goods.`gid`
-                    WHERE sdate=?""";
+            String sql =
+                    "SELECT goods.gname,goods.gprice,goods.gnum,gsales.snum FROM gsales JOIN goods ON gsales.`gid`=goods.`gid` WHERE sdate=?";
             psmt = conn.prepareStatement(sql);
             psmt.setDate(1, new Date(System.currentTimeMillis()));
             rs = psmt.executeQuery();

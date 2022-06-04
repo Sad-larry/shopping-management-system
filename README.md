@@ -24,16 +24,23 @@
 + 商品维护界面（已完成）
   + 方法名：MainPage.java中的goodsMain()，开始时间2022-6-2，完成时间2022-6-2
 + 添加商品
+  + 方法名：MainPage.java中的insertGoods()，开始时间2022-6-2，完成时间2022-6-2
 + 更改商品
+  + 方法名：MainPage.java中的updateGoods()，开始时间2022-6-2，完成时间2022-6-2
 + 删除商品
+  + 方法名：MainPage.java中的deleteGoods()，开始时间2022-6-2，完成时间2022-6-2
 + 显示所有商品
+  + 方法名：MainPage.java中的listGoods()，开始时间2022-6-2，完成时间2022-6-2
 + 查询商品
+  + 方法名：MainPage.java中的queryGoods()，开始时间2022-6-2，完成时间2022-6-2
 + 前台收银登陆（已完成）
   + 方法名：MainPage.java中的loginPage()，开始时间2022-6-2，完成时间2022-6-2
 + 购物结算
+  + 方法名：MainPage.java中的saleShopping()，开始时间2022-6-4，完成时间2022-6-4
 + 商品管理界面（已完成）
   + 方法名：MainPage.java中的goodsManager()，开始时间2022-6-2，完成时间2022-6-2
 + 查询当日卖出商品列表
+  + 方法名：MainPage.java中的listGoodsForSaledToday()，开始时间2022-6-4，完成时间2022-6-4
 + 售货员管理界面（已完成）
   + 方法名：MainPage.java中的salesmanManager()，开始时间2022-6-2，完成时间2022-6-2
 + 添加售货员（已完成）
